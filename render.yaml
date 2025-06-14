@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: excursion-backend
+    runtime: python
+    repo: https://github.com/Samia804/excursion_backend
+    branch: main
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "uvicorn main:app --host 0.0.0.0 --port 10000"
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: MONGO_URI
+        sync: false
+    plan: free
+    autoDeploy: true
