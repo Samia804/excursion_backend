@@ -48,7 +48,8 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://excursion-backend.onrender.com", "http://localhost:3000"],
+    allow_origins=["http://localhost:3000", 
+        "https://your-netlify-site.netlify.app"],  # ✅ deployed frontend,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
