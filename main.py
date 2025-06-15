@@ -49,8 +49,8 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000", 
-        "https://fantastic-cuchufli-e24505.netlify.app"],  # your Netlify site],  # ✅ deployed frontend,
-    allow_credentials=True,
+        "https://excur.netlify.app"],  # your Netlify site],  # ✅ deployed frontend,
+    #allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -74,5 +74,5 @@ async def chat(request: ChatRequest):
 
 
 @app.get("/")
-def home():
-    return {"message": "Excursions API is live!"}
+def root():
+    return {"message": "Backend running fine"}
