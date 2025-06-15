@@ -37,7 +37,7 @@ def home():
 
 
 
-
+from fastapi import FastAPI, HTTPException
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from models import ChatRequest, ChatResponse
@@ -49,7 +49,7 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000", 
-        "https://your-netlify-site.netlify.app"],  # ✅ deployed frontend,
+        "https://fantastic-cuchufli-e24505.netlify.app"],  # your Netlify site],  # ✅ deployed frontend,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -59,12 +59,19 @@ app.add_middleware(
 async def chat(request: ChatRequest):
     try:
         print("📩 Received message:", request.message)
+
         filters = extract_trip_filters(request.message)
+        print("🧠 Extracted filters:", filters)
+
         trips = search_trips(filters)
+        print("🎯 Found trips:", trips)
+
         return ChatResponse(trips=trips)
+
     except Exception as e:
         print("💥 Chat endpoint crashed with error:", str(e))
-        raise e
+        raise HTTPException(status_code=500, detail="Internal server error")
+
 
 @app.get("/")
 def home():
