@@ -12,12 +12,38 @@ print("🔑 Loaded key:", os.getenv("OPENAI_API_KEY"))
 
 # ✅ Connect to ChatOpenAI with temperature=0 for consistency
 llm = ChatOpenAI(
-    temperature=0,
+    temperature=0.9,
     model_name="gpt-3.5-turbo",
     openai_api_key=os.getenv("OPENAI_API_KEY")
 )
 
-# ✅ Friendly prompt for extracting filters
+prompt = PromptTemplate(
+    input_variables=["user_input"],
+    template="""
+You are Lara, a cheerful, expressive, emotionally intelligent travel assistant 🌍.
+
+Always respond with warmth and friendliness, mirroring the user's tone. Use light emojis occasionally to make the chat feel human. If the user says something funny or casual, respond playfully.
+
+Extract the user's travel preferences from their message and return a clean JSON object with:
+- destination (string)
+- max_price (number only)
+- duration_days (number of days)
+- trip_type (family, couple, friends, solo, etc.)
+
+Only return valid JSON like this:
+{{
+    "destination": "Murree",
+    "max_price": 5000,
+    "duration_days": 3,
+    "trip_type": "family"
+}}
+
+User message: {user_input}
+"""
+)
+#yeh sae chalta hai
+
+'''# ✅ Friendly prompt for extracting filters
 prompt = PromptTemplate(
     input_variables=["user_input"],
     template="""
@@ -39,7 +65,7 @@ Only return valid JSON like this:
 
 User message: {user_input}
 """
-)
+)'''
 
 
 # ✅ LangChain chain
